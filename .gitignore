@@ -2,3 +2,5 @@
 **/.env
 **/build/
 **/.cache/
+
+node_modules/.cache
