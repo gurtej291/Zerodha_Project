@@ -17,13 +17,14 @@ const Menu = () => {
     .slice(0, 2);
 
   const handleMenuClick = (index) => setSelectedMenu(index);
-  const handleProfileClick = () => setIsProfileDropdownOpen(!isProfileDropdownOpen);
+  const handleProfileClick = () =>
+    setIsProfileDropdownOpen(!isProfileDropdownOpen);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userName");
     localStorage.removeItem("userEmail");
-    window.location.href = "http://localhost:3000/login";
+    window.location.href = "https://zerodha-frontend.vercel.app/login";
   };
 
   const menuClass = "menu";
@@ -35,38 +36,78 @@ const Menu = () => {
       <div className="menus">
         <ul>
           <li>
-            <Link style={{ textDecoration: "none" }} to="/" onClick={() => handleMenuClick(0)}>
-              <p className={selectedMenu === 0 ? activeMenuClass : menuClass}>Dashboard</p>
+            <Link
+              style={{ textDecoration: "none" }}
+              to="/"
+              onClick={() => handleMenuClick(0)}
+            >
+              <p className={selectedMenu === 0 ? activeMenuClass : menuClass}>
+                Dashboard
+              </p>
             </Link>
           </li>
           <li>
-            <Link style={{ textDecoration: "none" }} to="/orders" onClick={() => handleMenuClick(1)}>
-              <p className={selectedMenu === 1 ? activeMenuClass : menuClass}>Orders</p>
+            <Link
+              style={{ textDecoration: "none" }}
+              to="/orders"
+              onClick={() => handleMenuClick(1)}
+            >
+              <p className={selectedMenu === 1 ? activeMenuClass : menuClass}>
+                Orders
+              </p>
             </Link>
           </li>
           <li>
-            <Link style={{ textDecoration: "none" }} to="/holdings" onClick={() => handleMenuClick(2)}>
-              <p className={selectedMenu === 2 ? activeMenuClass : menuClass}>Holdings</p>
+            <Link
+              style={{ textDecoration: "none" }}
+              to="/holdings"
+              onClick={() => handleMenuClick(2)}
+            >
+              <p className={selectedMenu === 2 ? activeMenuClass : menuClass}>
+                Holdings
+              </p>
             </Link>
           </li>
           <li>
-            <Link style={{ textDecoration: "none" }} to="/positions" onClick={() => handleMenuClick(3)}>
-              <p className={selectedMenu === 3 ? activeMenuClass : menuClass}>Positions</p>
+            <Link
+              style={{ textDecoration: "none" }}
+              to="/positions"
+              onClick={() => handleMenuClick(3)}
+            >
+              <p className={selectedMenu === 3 ? activeMenuClass : menuClass}>
+                Positions
+              </p>
             </Link>
           </li>
           <li>
-            <Link style={{ textDecoration: "none" }} to="/funds" onClick={() => handleMenuClick(4)}>
-              <p className={selectedMenu === 4 ? activeMenuClass : menuClass}>Funds</p>
+            <Link
+              style={{ textDecoration: "none" }}
+              to="/funds"
+              onClick={() => handleMenuClick(4)}
+            >
+              <p className={selectedMenu === 4 ? activeMenuClass : menuClass}>
+                Funds
+              </p>
             </Link>
           </li>
           <li>
-            <Link style={{ textDecoration: "none" }} to="/apps" onClick={() => handleMenuClick(5)}>
-              <p className={selectedMenu === 5 ? activeMenuClass : menuClass}>Apps</p>
+            <Link
+              style={{ textDecoration: "none" }}
+              to="/apps"
+              onClick={() => handleMenuClick(5)}
+            >
+              <p className={selectedMenu === 5 ? activeMenuClass : menuClass}>
+                Apps
+              </p>
             </Link>
           </li>
         </ul>
         <hr />
-        <div className="profile" onClick={handleProfileClick} style={{ cursor: "pointer", position: "relative" }}>
+        <div
+          className="profile"
+          onClick={handleProfileClick}
+          style={{ cursor: "pointer", position: "relative" }}
+        >
           <div className="avatar">{initials}</div>
           <p className="username">{userName.toUpperCase()}</p>
         </div>
@@ -85,8 +126,18 @@ const Menu = () => {
               boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
             }}
           >
-            <p style={{ margin: "0 0 4px", fontWeight: "bold", fontSize: "13px" }}>{userName}</p>
-            <p style={{ margin: "0 0 10px", fontSize: "12px", color: "#666" }}>{userEmail}</p>
+            <p
+              style={{
+                margin: "0 0 4px",
+                fontWeight: "bold",
+                fontSize: "13px",
+              }}
+            >
+              {userName}
+            </p>
+            <p style={{ margin: "0 0 10px", fontSize: "12px", color: "#666" }}>
+              {userEmail}
+            </p>
             <hr style={{ margin: "6px 0" }} />
             <button
               onClick={handleLogout}

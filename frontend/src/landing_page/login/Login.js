@@ -26,20 +26,26 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validate();
-    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs);
+      return;
+    }
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3002/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        "https://zerodha-project-8g6g.onrender.com/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        },
+      );
       const data = await res.json();
       if (!res.ok) {
         setServerError(data.message || "Invalid credentials.");
       } else {
         // Redirect to dashboard with token so dashboard can authenticate
-        window.location.href = `http://localhost:3001?token=${data.token}&name=${encodeURIComponent(data.user.name)}&email=${encodeURIComponent(data.user.email)}`;
+        window.location.href = `https://zerodha-dashboard.vercel.app?token=${data.token}&name=${encodeURIComponent(data.user.name)}&email=${encodeURIComponent(data.user.email)}`;
       }
     } catch (err) {
       setServerError("Could not connect to server. Please try again later.");
@@ -49,45 +55,86 @@ function Login() {
   };
 
   return (
-    <div className="container d-flex align-items-center justify-content-center" style={{ minHeight: "80vh" }}>
-      <div className="card shadow-sm p-4" style={{ width: "100%", maxWidth: "440px" }}>
+    <div
+      className="container d-flex align-items-center justify-content-center"
+      style={{ minHeight: "80vh" }}
+    >
+      <div
+        className="card shadow-sm p-4"
+        style={{ width: "100%", maxWidth: "440px" }}
+      >
         <div className="text-center mb-4">
-          <img src="media/images/logo.svg" alt="Zerodha" style={{ height: "40px" }} />
+          <img
+            src="media/images/logo.svg"
+            alt="Zerodha"
+            style={{ height: "40px" }}
+          />
           <h4 className="mt-3 fw-bold">Welcome back</h4>
           <p className="text-muted small">Log in to your Zerodha account</p>
         </div>
 
-        {serverError && <div className="alert alert-danger text-center">{serverError}</div>}
+        {serverError && (
+          <div className="alert alert-danger text-center">{serverError}</div>
+        )}
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="mb-3">
             <label className="form-label fw-semibold">Email Address</label>
             <input
-              type="email" name="email"
+              type="email"
+              name="email"
               className={`form-control ${errors.email ? "is-invalid" : ""}`}
-              placeholder="Enter your email" value={formData.email} onChange={handleChange}
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleChange}
             />
-            {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+            {errors.email && (
+              <div className="invalid-feedback">{errors.email}</div>
+            )}
           </div>
 
           <div className="mb-4">
             <label className="form-label fw-semibold">Password</label>
             <input
-              type="password" name="password"
+              type="password"
+              name="password"
               className={`form-control ${errors.password ? "is-invalid" : ""}`}
-              placeholder="Enter your password" value={formData.password} onChange={handleChange}
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleChange}
             />
-            {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+            {errors.password && (
+              <div className="invalid-feedback">{errors.password}</div>
+            )}
           </div>
 
-          <button type="submit" className="btn btn-primary w-100 py-2 fw-semibold" disabled={loading}>
-            {loading ? (<><span className="spinner-border spinner-border-sm me-2" role="status" />Logging in…</>) : "Log In"}
+          <button
+            type="submit"
+            className="btn btn-primary w-100 py-2 fw-semibold"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <span
+                  className="spinner-border spinner-border-sm me-2"
+                  role="status"
+                />
+                Logging in…
+              </>
+            ) : (
+              "Log In"
+            )}
           </button>
         </form>
 
         <p className="text-center mt-3 small text-muted">
           Don't have an account?{" "}
-          <Link to="/signup" className="text-primary text-decoration-none fw-semibold">Sign up</Link>
+          <Link
+            to="/signup"
+            className="text-primary text-decoration-none fw-semibold"
+          >
+            Sign up
+          </Link>
         </p>
       </div>
     </div>

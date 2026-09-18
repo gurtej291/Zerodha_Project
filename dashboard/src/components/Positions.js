@@ -9,12 +9,18 @@ const Positions = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
-      .get("http://localhost:3002/allPositions", {
+      .get("https://zerodha-project-8g6g.onrender.com/allPositions", {
         headers: { Authorization: `Bearer ${token}` },
         timeout: 10000,
       })
-      .then((res) => { setAllPositions(Array.isArray(res.data) ? res.data : []); setLoading(false); })
-      .catch((err) => { setError(err.message || "Failed to fetch positions"); setLoading(false); });
+      .then((res) => {
+        setAllPositions(Array.isArray(res.data) ? res.data : []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message || "Failed to fetch positions");
+        setLoading(false);
+      });
   }, []);
 
   if (loading) return <p style={{ padding: "20px" }}>Loading positions…</p>;
@@ -26,8 +32,13 @@ const Positions = () => {
         <table>
           <thead>
             <tr>
-              <th>Product</th><th>Instrument</th><th>Qty.</th>
-              <th>Avg.</th><th>LTP</th><th>P&L</th><th>Chg.</th>
+              <th>Product</th>
+              <th>Instrument</th>
+              <th>Qty.</th>
+              <th>Avg.</th>
+              <th>LTP</th>
+              <th>P&L</th>
+              <th>Chg.</th>
             </tr>
           </thead>
           <tbody>
@@ -41,14 +52,31 @@ const Positions = () => {
                   <td>{stock.qty}</td>
                   <td>{Number(stock.avg || 0).toFixed(2)}</td>
                   <td>{Number(stock.price || 0).toFixed(2)}</td>
-                  <td className={isProfit ? "profit" : "loss"}>{(curValue - stock.avg * stock.qty).toFixed(2)}</td>
-                  <td className={stock.isLoss ? "loss" : "profit"}>{stock.day}</td>
+                  <td className={isProfit ? "profit" : "loss"}>
+                    {(curValue - stock.avg * stock.qty).toFixed(2)}
+                  </td>
+                  <td className={stock.isLoss ? "loss" : "profit"}>
+                    {stock.day}
+                  </td>
                 </tr>
               );
             })}
-            {error && <tr><td colSpan={7} style={{ color: "red" }}>Error: {error}</td></tr>}
+            {error && (
+              <tr>
+                <td colSpan={7} style={{ color: "red" }}>
+                  Error: {error}
+                </td>
+              </tr>
+            )}
             {!loading && allPositions.length === 0 && !error && (
-              <tr><td colSpan={7} style={{ textAlign: "center", padding: "20px" }}>No open positions</td></tr>
+              <tr>
+                <td
+                  colSpan={7}
+                  style={{ textAlign: "center", padding: "20px" }}
+                >
+                  No open positions
+                </td>
+              </tr>
             )}
           </tbody>
         </table>

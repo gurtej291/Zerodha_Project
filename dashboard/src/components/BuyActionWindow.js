@@ -11,17 +11,20 @@ const BuyActionWindow = ({ uid }) => {
 
   const handleBuyClick = () => {
     const token = localStorage.getItem("token");
-    axios.post(
-      "http://localhost:3002/newOrder",
-      { name: uid, qty: stockQuantity, price: stockPrice, mode: "BUY" },
-      { headers: { Authorization: `Bearer ${token}` } }
-    ).then(() => {
-      alert(`Buy order placed for ${uid}`);
-      closeBuyWindow();
-    }).catch((err) => {
-      console.error("Order failed", err);
-      closeBuyWindow();
-    });
+    axios
+      .post(
+        "https://zerodha-project-8g6g.onrender.com/newOrder",
+        { name: uid, qty: stockQuantity, price: stockPrice, mode: "BUY" },
+        { headers: { Authorization: `Bearer ${token}` } },
+      )
+      .then(() => {
+        alert(`Buy order placed for ${uid}`);
+        closeBuyWindow();
+      })
+      .catch((err) => {
+        console.error("Order failed", err);
+        closeBuyWindow();
+      });
   };
 
   const handleCancelClick = () => closeBuyWindow();
@@ -32,21 +35,36 @@ const BuyActionWindow = ({ uid }) => {
         <div className="inputs">
           <fieldset>
             <legend>Qty.</legend>
-            <input type="number" name="qty" id="qty"
-              onChange={(e) => setStockQuantity(e.target.value)} value={stockQuantity} />
+            <input
+              type="number"
+              name="qty"
+              id="qty"
+              onChange={(e) => setStockQuantity(e.target.value)}
+              value={stockQuantity}
+            />
           </fieldset>
           <fieldset>
             <legend>Price</legend>
-            <input type="number" name="price" id="price" step="0.05"
-              onChange={(e) => setStockPrice(e.target.value)} value={stockPrice} />
+            <input
+              type="number"
+              name="price"
+              id="price"
+              step="0.05"
+              onChange={(e) => setStockPrice(e.target.value)}
+              value={stockPrice}
+            />
           </fieldset>
         </div>
       </div>
       <div className="buttons">
         <span>Margin required ₹140.65</span>
         <div>
-          <Link className="btn btn-blue" onClick={handleBuyClick}>Buy</Link>
-          <Link to="" className="btn btn-grey" onClick={handleCancelClick}>Cancel</Link>
+          <Link className="btn btn-blue" onClick={handleBuyClick}>
+            Buy
+          </Link>
+          <Link to="" className="btn btn-grey" onClick={handleCancelClick}>
+            Cancel
+          </Link>
         </div>
       </div>
     </div>

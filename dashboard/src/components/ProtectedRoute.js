@@ -20,12 +20,12 @@ const ProtectedRoute = ({ children }) => {
 
     const token = localStorage.getItem("token");
     if (!token) {
-      window.location.href = "http://localhost:3000/login";
+      window.location.href = "https://zerodha-project-8g6g.onrender.com/login";
       return;
     }
 
     // Verify token with backend
-    fetch("http://localhost:3002/me", {
+    fetch("https://zerodha-project-8g6g.onrender.com/me", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
@@ -49,8 +49,17 @@ const ProtectedRoute = ({ children }) => {
 
   if (checking) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-        <p style={{ color: "#387ed1", fontSize: "18px" }}>Loading your dashboard…</p>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <p style={{ color: "#387ed1", fontSize: "18px" }}>
+          Loading your dashboard…
+        </p>
       </div>
     );
   }

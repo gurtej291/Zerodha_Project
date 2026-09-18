@@ -9,11 +9,14 @@ const Orders = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios
-      .get("http://localhost:3002/allOrders", {
+      .get("https://zerodha-project-8g6g.onrender.com/allOrders", {
         headers: { Authorization: `Bearer ${token}` },
         timeout: 10000,
       })
-      .then((res) => { setOrders(Array.isArray(res.data) ? res.data : []); setLoading(false); })
+      .then((res) => {
+        setOrders(Array.isArray(res.data) ? res.data : []);
+        setLoading(false);
+      })
       .catch(() => setLoading(false));
   }, []);
 
@@ -24,7 +27,9 @@ const Orders = () => {
       <div className="orders">
         <div className="no-orders">
           <p>You haven't placed any orders today</p>
-          <Link to="/" className="btn">Get started</Link>
+          <Link to="/" className="btn">
+            Get started
+          </Link>
         </div>
       </div>
     );
@@ -37,7 +42,11 @@ const Orders = () => {
         <table>
           <thead>
             <tr>
-              <th>Instrument</th><th>Qty.</th><th>Price</th><th>Mode</th><th>Time</th>
+              <th>Instrument</th>
+              <th>Qty.</th>
+              <th>Price</th>
+              <th>Mode</th>
+              <th>Time</th>
             </tr>
           </thead>
           <tbody>
@@ -46,8 +55,14 @@ const Orders = () => {
                 <td>{order.name}</td>
                 <td>{order.qty}</td>
                 <td>{Number(order.price || 0).toFixed(2)}</td>
-                <td className={order.mode === "BUY" ? "profit" : "loss"}>{order.mode}</td>
-                <td>{order.createdAt ? new Date(order.createdAt).toLocaleString() : "—"}</td>
+                <td className={order.mode === "BUY" ? "profit" : "loss"}>
+                  {order.mode}
+                </td>
+                <td>
+                  {order.createdAt
+                    ? new Date(order.createdAt).toLocaleString()
+                    : "—"}
+                </td>
               </tr>
             ))}
           </tbody>

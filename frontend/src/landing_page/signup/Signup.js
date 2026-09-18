@@ -45,15 +45,18 @@ function Signup() {
     }
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:3002/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
+      const res = await fetch(
+        "https://zerodha-project-8g6g.onrender.com/signup",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+          }),
+        },
+      );
       const data = await res.json();
       if (!res.ok) {
         setServerError(data.message || "Signup failed. Please try again.");
@@ -182,7 +185,10 @@ function Signup() {
 
         <p className="text-center mt-3 small text-muted">
           Already have an account?{" "}
-          <Link to="/login" className="text-primary text-decoration-none fw-semibold">
+          <Link
+            to="/login"
+            className="text-primary text-decoration-none fw-semibold"
+          >
             Log in
           </Link>
         </p>
